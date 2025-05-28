@@ -195,6 +195,35 @@
         xy( 449,  888 )
         ], { color: "#d4af37" } );
 
+        var tzukyn_wilds = L.polygon( [
+            xy( 1105, 1077 ),
+            xy( 1108, 1134 ),
+            xy( 1070, 1110 ),
+            xy( 1064, 1094 ),
+            xy( 1081, 1080 )
+        ], { color: "#007f7f" } );
+
+        var arctic = L.polygon ( [
+            xy( 495,  42 ),
+            xy( 754,  42 ),
+            xy( 773, 215 ),
+            xy( 773, 215 ),
+            xy( 471, 417 ),
+            xy( 242, 467 ),
+            xy( 202, 247 )
+        ], { color: "#abc9d6" } );
+
+        var north_wilds = L.polygon ( [
+            xy(  845, 322 ),
+            xy( 1285, 347 ),
+            xy( 1318, 375 ),
+            xy( 1227, 419 ),
+            xy(  894, 476 ),
+            xy(  696, 668 ),
+            xy(  596, 676 ),
+            xy(  568, 595 )
+        ], { color: "#977f3e" } );
+
         // Map initialization
         var map = L.map( "map", {
             crs: L.CRS.Simple,
@@ -234,9 +263,9 @@
         // Add to map
         var layerControl = L.control.layers( baseMaps, overlayMaps, { collapsed: false, hideSingleBase: true } ).addTo( map );
         great_plains.bindTooltip( "Great Plains", { permanent: true, direction: "center" } ).addTo( map );
-
-        // Debug
-        console.log('controlCredits factory:', L.controlCredits);
+        tzukyn_wilds.addTo( map );
+        arctic.bindTooltip( "Arctic", { permanent: true, direction: "center" } ).addTo( map );
+        north_wilds.bindTooltip( "Northern Wilderness", { permanent: true, direction: "top" } ).addTo( map );
 
         // Credits
         L.controlCredits({
