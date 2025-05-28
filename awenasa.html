@@ -170,29 +170,18 @@
         // Stargazers
         var kulusak = L.marker( xy( 962, 1345 ), { icon: icons['stargazers_capital'] } ).bindTooltip( "Kulusak", { permanent: true, direction: "top" } );
 
-        // Marker layers
-        var asturias   = L.layerGroup( [ astorga, tepnavaca, forcadas, calaxapa, tepizanoc, ardisa, belazaima, huesca, bairradas, orotava, delmossa, vedra ] );
-        var dumanon    = L.layerGroup( [ new_hartham, fort_balcree, siron, ramouzen, new_keldham, triviaux, vallade, seillans, havresse, port_gratton, kirkpharin ] );
-        var gallia     = L.layerGroup( [ alienor, port_amical, aureilhan ] );
-        var sasanshahr = L.layerGroup( [ surem ] );
-        var daramos    = L.layerGroup( [ annec, snelnor, torenor, acrabera ] )
-        var tzukyn     = L.layerGroup( [ zipactonen ] )
-        var galasaar   = L.layerGroup( [ yinresse, jinresse, halanor, merra, ulthaira, isec, ulthbaxthaira, kelrae, loresse, ynnec ] )
-        var kitzra     = L.layerGroup( [ kynsra, anra, myinshara ] )
-        var ritan      = L.layerGroup( [ cygnus, ciel, celka, eatalra, calranoc, tepexca, iztapa, zima ] )
-        var dwarves    = L.layerGroup( [ oranmar, sherandum, agadum, yarendum, dendardum, kolrak, zememunt ] )
-        var amutep     = L.layerGroup( [ nebetah, apis ] )
-        var banenrhun  = L.layerGroup( [ belserra, belkana ] )
-        var stargazers = L.layerGroup( [ kulusak ] )
+        // Others
+        var azul = L.tooltip( xy( 1659, 1090 ), { content: "Azul", permanent: true, direction: "top" } );
+        var nahas = L.tooltip( xy( 1338, 1040 ), { content: "Nahas Frontier", permanent: true, direction: "center" } );
 
         // Polygons
         var great_plains = L.polygon( [
-        xy( 478,  765 ),
-        xy( 644,  765 ),
-        xy( 749,  927 ),
-        xy( 731, 1020 ),
-        xy( 542,  992 ),
-        xy( 449,  888 )
+            xy( 478,  765 ),
+            xy( 644,  765 ),
+            xy( 749,  927 ),
+            xy( 731, 1020 ),
+            xy( 542,  992 ),
+            xy( 449,  888 )
         ], { color: "#d4af37" } );
 
         var tzukyn_wilds = L.polygon( [
@@ -224,12 +213,28 @@
             xy(  568, 595 )
         ], { color: "#977f3e" } );
 
+        // Toggleable layers
+        var asturias   = L.layerGroup( [ astorga, tepnavaca, forcadas, calaxapa, tepizanoc, ardisa, belazaima, huesca, bairradas, orotava, delmossa, vedra ] );
+        var dumanon    = L.layerGroup( [ new_hartham, fort_balcree, siron, ramouzen, new_keldham, triviaux, vallade, seillans, havresse, port_gratton, kirkpharin ] );
+        var gallia     = L.layerGroup( [ alienor, port_amical, aureilhan ] );
+        var sasanshahr = L.layerGroup( [ surem ] );
+        var daramos    = L.layerGroup( [ annec, snelnor, torenor, acrabera ] )
+        var tzukyn     = L.layerGroup( [ zipactonen, tzukyn_wilds ] )
+        var galasaar   = L.layerGroup( [ yinresse, jinresse, halanor, merra, ulthaira, isec, ulthbaxthaira, kelrae, loresse, ynnec ] )
+        var kitzra     = L.layerGroup( [ kynsra, anra, myinshara ] )
+        var ritan      = L.layerGroup( [ cygnus, ciel, celka, eatalra, calranoc, tepexca, iztapa, zima ] )
+        var dwarves    = L.layerGroup( [ oranmar, sherandum, agadum, yarendum, dendardum, kolrak, zememunt ] )
+        var amutep     = L.layerGroup( [ nebetah, apis ] )
+        var banenrhun  = L.layerGroup( [ belserra, belkana ] )
+        var stargazers = L.layerGroup( [ kulusak ] )
+        var others      = L.layerGroup( [ azul, nahas, great_plains, arctic, north_wilds ] )
+
         // Map initialization
         var map = L.map( "map", {
             crs: L.CRS.Simple,
             minZoom: -1,
             maxZoom: 3,
-            layers: [asturias, dumanon, gallia, sasanshahr, daramos, tzukyn, galasaar, kitzra, ritan, dwarves, amutep, banenrhun, stargazers]
+            layers: [asturias, dumanon, gallia, sasanshahr, daramos, tzukyn, galasaar, kitzra, ritan, dwarves, amutep, banenrhun, stargazers, others]
         });
 
         // Map layer
@@ -257,7 +262,8 @@
             "Ancient Dwarves": dwarves,
             "Amu-Tep": amutep,
             "Banen'Rhûn": banenrhun,
-            "Stargazers": stargazers
+            "Stargazers": stargazers,
+            "Others": others
         }
 
         // Add to map
