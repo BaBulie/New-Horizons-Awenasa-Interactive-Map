@@ -182,6 +182,16 @@
     var banenrhun  = L.layerGroup( [ belserra, belkana ] )
     var stargazers = L.layerGroup( [ kulusak ] )
 
+    // Polygons
+    var great_plains = L.polygon( [
+    xy( 478,  765 ),
+    xy( 644,  765 ),
+    xy( 749,  927 ),
+    xy( 731, 1020 ),
+    xy( 542,  992 ),
+    xy( 449,  888 )
+    ], { color: "#d4af37" } );
+
     // Map initialization
     var map = L.map( "map", {
         crs: L.CRS.Simple,
@@ -219,4 +229,5 @@
     }
 
     var layerControl = L.control.layers( baseMaps, overlayMaps, { collapsed: false, hideSingleBase: true } ).addTo( map );
+    great_plains.bindTooltip( "Great Plains", { permanent: true, direction: "center" } ).addTo( map );
 </script>
