@@ -1,0 +1,64 @@
+.leaflet-control-pinsearch {
+  position: relative;
+}
+
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #0b0e15;
+  border: 1px solid #d4af37;
+  border-radius: 0px;
+	box-shadow: 0 0 10px 5px black;
+}
+
+.search-input {
+  width: 200px;
+  height: 30px;
+  padding: 5px 30px 5px 10px;
+  background-color: #0b0e15;
+  border: 1px solid #d4af37;
+  border-radius: 0px;
+  color: #d4af37;
+  font-family: 'Times New Roman';
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5em;
+  pointer-events: none;
+}
+
+.search-results {
+  display: none;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  padding: 5px;
+  background-color: #0b0e15;
+  border: 2px solid #d4af37;
+  border-radius: 0px;
+	box-shadow: 0 0 10px 5px black;
+  color: #d4af37;
+  font-family: 'Times New Roman';
+  font-size: medium;
+  z-index: 9999;
+}
+
+.search-results-item {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.search-results-item:hover {
+  background-color: #d4af37;
+  color: #0b0e15;
+}
+
+.search-results-item.highlight {
+  background-color: #d4af37;
+}

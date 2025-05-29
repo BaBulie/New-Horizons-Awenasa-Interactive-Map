@@ -386,6 +386,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	border: 2px solid #d4af37 !important;
 	border-radius: 0px;
 	box-shadow: 0 0 10px 5px black !important;
+	width: 220px;
 	}
 .leaflet-control-layers-scrollbar {
 	overflow-y: scroll;

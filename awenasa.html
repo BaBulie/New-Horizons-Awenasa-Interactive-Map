@@ -10,12 +10,13 @@
     <link rel = "stylesheet" href = "leaflet.css" />
 
     <!-- plugin css -->
-    <link rel="stylesheet" href="plugins/leaflet-control-credits.css" />
+    <link rel = "stylesheet" href = "plugins/leaflet-control-credits.css" />
+    <link rel = "stylesheet" href = "plugins/leaflet-pinsearch.css" />
 
     <style>
         #map {
             width: 100%;
-            height: 99vh;
+            height: 100vh;
         }
     </style>
 </head>
@@ -29,7 +30,8 @@
             crossorigin = ""></script>
 
     <!-- plugin js -->
-    <script src="plugins/leaflet-control-credits.js"></script>
+    <script src = "plugins/leaflet-control-credits.js"></script>
+    <script src = "plugins/leaflet-pinsearch.js"></script>
 
     <script>
         // Custom marker icons
@@ -77,104 +79,127 @@
             return yx( 2048 - y, x );
         };
 
-        // Markers
-        // Asturias
-        var astorga   = L.marker( xy( 1610, 1387 ), { icon: icons['asturias_capital'] } ).bindTooltip( "Astorga",   { permanent: true, direction: "top" } );
-        var tepnavaca = L.marker( xy( 1475, 1563 ), { icon: icons['asturias_city']    } ).bindTooltip( "Tepnavaca", { permanent: true, direction: "top" } );
-        var forcadas  = L.marker( xy( 1596, 1511 ), { icon: icons['asturias_village'] } ).bindTooltip( "Forcadas",  { permanent: true, direction: "top" } );
-        var calaxapa  = L.marker( xy( 1267, 1513 ), { icon: icons['asturias_village'] } ).bindTooltip( "Calaxapa",  { permanent: true, direction: "top" } );
-        var tepizanoc = L.marker( xy( 1232, 1424 ), { icon: icons['asturias_village'] } ).bindTooltip( "Tepizanoc", { permanent: true, direction: "top" } );
-        var ardisa    = L.marker( xy( 1622, 1325 ), { icon: icons['asturias_village'] } ).bindTooltip( "Ardisa",    { permanent: true, direction: "top" } );
-        var belazaima = L.marker( xy( 1649, 1266 ), { icon: icons['asturias_village'] } ).bindTooltip( "Belazaima", { permanent: true, direction: "top" } );
-        var huesca    = L.marker( xy( 1582, 1163 ), { icon: icons['asturias_village'] } ).bindTooltip( "Huesca",    { permanent: true, direction: "top" } );
-        var bairradas = L.marker( xy( 1797, 1121 ), { icon: icons['asturias_village'] } ).bindTooltip( "Bairradas", { permanent: true, direction: "top" } );
-        var orotava   = L.marker( xy( 1849, 1086 ), { icon: icons['asturias_village'] } ).bindTooltip( "Orotava",   { permanent: true, direction: "top" } );
-        var delmossa  = L.marker( xy( 1863, 1049 ), { icon: icons['asturias_village'] } ).bindTooltip( "Delmossa",  { permanent: true, direction: "top" } );
-        var vedra     = L.marker( xy( 1625, 1014 ), { icon: icons['asturias_village'] } ).bindTooltip( "Vedrà",     { permanent: true, direction: "top" } );
-        
-        // Dumanon
-        var new_hartham  = L.marker( xy( 1307,  676 ), { icon: icons['dumanon_capital'] } ).bindTooltip( "New Hartham",  { permanent: true, direction: "top" } );
-        var fort_balcree = L.marker( xy( 1101,  508 ), { icon: icons['dumanon_city']    } ).bindTooltip( "Fort Balcree", { permanent: true, direction: "top" } );
-        var siron        = L.marker( xy( 1349,  815 ), { icon: icons['dumanon_city']    } ).bindTooltip( "Siron",        { permanent: true, direction: "top" } );
-        var ramouzen     = L.marker( xy( 1720, 1143 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Ramouzen",     { permanent: true, direction: "top" } );
-        var new_keldham  = L.marker( xy( 1527, 1015 ), { icon: icons['dumanon_village'] } ).bindTooltip( "New Keldham",  { permanent: true, direction: "top" } );
-        var triviaux     = L.marker( xy( 1633,  974 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Triviaux",     { permanent: true, direction: "top" } );
-        var vallade      = L.marker( xy( 1485,  849 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Vallade",      { permanent: true, direction: "top" } );
-        var seillans     = L.marker( xy( 1197,  819 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Seillans",     { permanent: true, direction: "top" } );
-        var havresse     = L.marker( xy( 1264,  736 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Havresse",     { permanent: true, direction: "top" } );
-        var port_gratton = L.marker( xy( 1553,  732 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Port Gratton", { permanent: true, direction: "top" } );
-        var kirkpharin   = L.marker( xy( 1302,  436 ), { icon: icons['dumanon_village'] } ).bindTooltip( "Kirkpharin",   { permanent: true, direction: "top" } );
+        // Marker locations
+        const places = [
+            // Asturias
+            { name: "Astorga",   coords: [ 1610, 1387 ], iconKey: "asturias_capital", region: "asturias" },
+            { name: "Tepnavaca", coords: [ 1475, 1563 ], iconKey: "asturias_city",    region: "asturias" },
+            { name: "Forcadas",  coords: [ 1596, 1511 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Calaxapa",  coords: [ 1267, 1513 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Tepizanoc", coords: [ 1232, 1424 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Ardisa",    coords: [ 1622, 1325 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Belazaima", coords: [ 1649, 1266 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Huesca",    coords: [ 1582, 1163 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Bairradas", coords: [ 1797, 1121 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Orotava",   coords: [ 1849, 1086 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Delmossa",  coords: [ 1863, 1049 ], iconKey: "asturias_village", region: "asturias" },
+            { name: "Vedrà",     coords: [ 1625, 1014 ], iconKey: "asturias_village", region: "asturias" },
 
-        // Gallia
-        var alienor     = L.marker( xy( 1241,  902 ), { icon: icons['gallia_capital'] } ).bindTooltip( "Aliénor",     { permanent: true, direction: "top" } );
-        var port_amical = L.marker( xy( 1469, 1198 ), { icon: icons['gallia_city']    } ).bindTooltip( "Port Amical", { permanent: true, direction: "top" } );
-        var aureilhan   = L.marker( xy( 1661, 1227 ), { icon: icons['gallia_village'] } ).bindTooltip( "Aureilhan",   { permanent: true, direction: "top" } );
+            // Dumanon
+            { name: "New Hartham",  coords: [ 1307,  676 ], iconKey: "dumanon_capital", region: "dumanon" },
+            { name: "Fort Balcree", coords: [ 1101,  508 ], iconKey: "dumanon_city",    region: "dumanon" },
+            { name: "Siron",        coords: [ 1349,  815 ], iconKey: "dumanon_city",    region: "dumanon" },
+            { name: "Ramouzen",     coords: [ 1720, 1143 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "New Keldham",  coords: [ 1527, 1015 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Triviaux",     coords: [ 1633,  974 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Vallade",      coords: [ 1485,  849 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Seillans",     coords: [ 1197,  819 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Havresse",     coords: [ 1264,  736 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Port Gratton", coords: [ 1553,  732 ], iconKey: "dumanon_village", region: "dumanon" },
+            { name: "Kirkpharin",   coords: [ 1302,  436 ], iconKey: "dumanon_village", region: "dumanon" },
 
-        // Sasanshahr
-        var surem = L.marker( xy( 1461, 1059 ), { icon: icons['sasanshahr_capital'] } ).bindTooltip( "Surem", { permanent: true, direction: "top" } );
+            // Gallia
+            { name: "Aliénor",     coords: [ 1241,  902 ], iconKey: "gallia_capital", region: "gallia" },
+            { name: "Port Amical", coords: [ 1469, 1198 ], iconKey: "gallia_city",    region: "gallia" },
+            { name: "Aureilhan",   coords: [ 1661, 1227 ], iconKey: "gallia_village", region: "gallia" },
 
-        // House Daramos
-        var annec    = L.marker( xy(  882, 870 ), { icon: icons['daramos_village'] } ).bindTooltip( "Annec",    { permanent: true, direction: "top" } );
-        var snelnor  = L.marker( xy(  796, 981 ), { icon: icons['daramos_village'] } ).bindTooltip( "Shelnor",  { permanent: true, direction: "top" } );
-        var torenor  = L.marker( xy( 1053, 949 ), { icon: icons['daramos_village'] } ).bindTooltip( "Torenor",  { permanent: true, direction: "top" } );
-        var acrabera = L.marker( xy(  929, 968 ), { icon: icons['daramos_capital'] } ).bindTooltip( "Acrabera", { permanent: true, direction: "top" } );
-        
-        // House Tzukyn		
-        var zipactonen = L.marker( xy( 1128, 1111 ), { icon: icons['tzukyn_capital'] } ).bindTooltip( "Zipactonen (Khiel)", { permanent: true, direction: "top" } );
-        
-        // House Galasaar
-        var yinresse      = L.marker( xy(  940, 703 ), { icon: icons['galasaar_capital'] } ).bindTooltip( "Yinresse",      { permanent: true, direction: "top" } );
-        var kynrae        = L.marker( xy( 1027, 492 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Kynrae",        { permanent: true, direction: "top" } );
-        var jinresse      = L.marker( xy(  898, 514 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Jinresse",      { permanent: true, direction: "top" } );
-        var halanor       = L.marker( xy(  809, 592 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Halanor",       { permanent: true, direction: "top" } );
-        var merra         = L.marker( xy( 1105, 543 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Merra",         { permanent: true, direction: "top" } );
-        var ulthaira      = L.marker( xy( 1206, 568 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Ulthaira",      { permanent: true, direction: "top" } );
-        var isec          = L.marker( xy(  909, 633 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Isec",          { permanent: true, direction: "top" } );
-        var ulthbaxthaira = L.marker( xy( 1090, 658 ), { icon: icons['galasaar_city']    } ).bindTooltip( "Ulthbaxthaira", { permanent: true, direction: "top" } );
-        var kelrae        = L.marker( xy(  583, 695 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Kelrae",        { permanent: true, direction: "top" } );
-        var loresse       = L.marker( xy( 1137, 736 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Loresse",       { permanent: true, direction: "top" } );
-        var ynnec         = L.marker( xy(  799, 801 ), { icon: icons['galasaar_village'] } ).bindTooltip( "Ynnec",         { permanent: true, direction: "top" } );
-        
-        // House Kitzra
-        var kynsra    = L.marker( xy( 1012,  985 ), { icon: icons['kitzra_village'] } ).bindTooltip( "Kynsra",    { permanent: true, direction: "top" } );
-        var anra      = L.marker( xy( 1098, 1060 ), { icon: icons['kitzra_capital'] } ).bindTooltip( "Anra",      { permanent: true, direction: "top" } );
-        var myinshara = L.marker( xy( 1216,  932 ), { icon: icons['kitzra_city']    } ).bindTooltip( "Myinshara", { permanent: true, direction: "top" } );
-        
-        // House Ritan
-        var cygnus   = L.marker( xy(  969, 1014 ), { icon: icons['ritan_capital'] } ).bindTooltip( "Cygnus",    { permanent: true, direction: "top" } );
-        var ciel     = L.marker( xy(  915, 1062 ), { icon: icons['ritan_city']    } ).bindTooltip( "Ciel",      { permanent: true, direction: "top" } );
-        var celka    = L.marker( xy(  961, 1074 ), { icon: icons['ritan_city']    } ).bindTooltip( "Celka",     { permanent: true, direction: "top" } );
-        var eatalra  = L.marker( xy( 1019, 1145 ), { icon: icons['ritan_village'] } ).bindTooltip( "Eatalra",   { permanent: true, direction: "top" } );
-        var calranoc = L.marker( xy(  988, 1217 ), { icon: icons['ritan_village'] } ).bindTooltip( "Calnaraoc", { permanent: true, direction: "top" } );
-        var tepexca  = L.marker( xy( 1100, 1245 ), { icon: icons['ritan_village'] } ).bindTooltip( "Tepexca",   { permanent: true, direction: "top" } );
-        var iztapa   = L.marker( xy( 1172, 1296 ), { icon: icons['ritan_village'] } ).bindTooltip( "Iztapa",    { permanent: true, direction: "top" } );
-        var zima     = L.marker( xy( 1202, 1387 ), { icon: icons['ritan_city']    } ).bindTooltip( "Zima",      { permanent: true, direction: "top" } );
-        
-        // Ancient Dwarves
-        var oranmar   = L.marker( xy( 1240,  631 ), { icon: icons['dwarven_village'] } ).bindTooltip( "Oranmar",       { permanent: true, direction: "top" } );
-        var sherandum = L.marker( xy( 1026,  693 ), { icon: icons['dwarven_city']    } ).bindTooltip( "Ort-Sherandum", { permanent: true, direction: "top" } );
-        var agadum    = L.marker( xy(  859,  776 ), { icon: icons['dwarven_city']    } ).bindTooltip( "Ort-Agadum",    { permanent: true, direction: "top" } );
-        var yarendum  = L.marker( xy( 1025,  855 ), { icon: icons['dwarven_city']    } ).bindTooltip( "Ort-Yarendum",  { permanent: true, direction: "top" } );
-        var dendardum = L.marker( xy( 1156,  984 ), { icon: icons['dwarven_village'] } ).bindTooltip( "Ort-Dendardum", { permanent: true, direction: "top" } );
-        var kolrak    = L.marker( xy( 1249, 1109 ), { icon: icons['dwarven_village'] } ).bindTooltip( "Kolrak",        { permanent: true, direction: "top" } );
-        var zememunt  = L.marker( xy(  932, 1245 ), { icon: icons['dwarven_village'] } ).bindTooltip( "Zememunt",      { permanent: true, direction: "top" } );
+            // Sasanshahr
+            { name: "Surem", coords: [ 1461, 1059 ], iconKey: "sasanshahr_capital", region: "sasanshahr" },
 
-        // Amu-Tep 
-        var nebetah = L.marker( xy( 1357, 1262 ), { icon: icons['amutep_city']    } ).bindTooltip( "Niwt-Nebetah", { permanent: true, direction: "top" } );
-        var apis    = L.marker( xy( 1434, 1245 ), { icon: icons['amutep_capital'] } ).bindTooltip( "Apis",         { permanent: true, direction: "top" } );
+            // House Daramos
+            { name: "Acrabera", coords: [  929, 968 ], iconKey: "daramos_capital", region: "daramos" },
+            { name: "Annec",    coords: [  882, 870 ], iconKey: "daramos_village", region: "daramos" },
+            { name: "Shelnor",  coords: [  796, 981 ], iconKey: "daramos_village", region: "daramos" },
+            { name: "Torenor",  coords: [ 1053, 949 ], iconKey: "daramos_village", region: "daramos" },
 
-        // Banen'Rhûn
-        var belserra = L.marker( xy( 653, 421 ), { icon: icons['banenrhun_capital'] } ).bindTooltip( "Bel'Serra", { permanent: true, direction: "top" } );
-        var belkana  = L.marker( xy( 491, 656 ), { icon: icons['banenrhun_city']    } ).bindTooltip( "Bel'Kana",  { permanent: true, direction: "top" } );
-        
-        // Stargazers
-        var kulusak = L.marker( xy( 962, 1345 ), { icon: icons['stargazers_capital'] } ).bindTooltip( "Kulusak", { permanent: true, direction: "top" } );
+            // House Tzukyn
+            { name: "Zipactonen", coords: [ 1128, 1111 ], iconKey: "tzukyn_capital", region: "tzukyn" },
 
-        // Others
-        var azul = L.tooltip( xy( 1659, 1090 ), { content: "Azul", permanent: true, direction: "top" } );
-        var nahas = L.tooltip( xy( 1338, 1040 ), { content: "Nahas Frontier", permanent: true, direction: "center" } );
+            // House Galasaar
+            { name: "Yinresse",      coords: [  940, 703 ], iconKey: "galasaar_capital", region: "galasaar" },
+            { name: "Ulthbaxthaira", coords: [ 1090, 658 ], iconKey: "galasaar_city",    region: "galasaar" },
+            { name: "Kynrae",        coords: [ 1027, 492 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Jinresse",      coords: [  898, 514 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Halanor",       coords: [  809, 592 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Merra",         coords: [ 1105, 543 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Ulthaira",      coords: [ 1206, 568 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Isec",          coords: [  909, 633 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Kelrae",        coords: [  583, 695 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Loresse",       coords: [ 1137, 736 ], iconKey: "galasaar_village", region: "galasaar" },
+            { name: "Ynnec",         coords: [  799, 801 ], iconKey: "galasaar_village", region: "galasaar" },
+
+            // House Kitzra
+            { name: "Anra",      coords: [ 1098, 1060 ], iconKey: "kitzra_capital", region: "kitzra" },
+            { name: "Myinshara", coords: [ 1216,  932 ], iconKey: "kitzra_city",    region: "kitzra" },
+            { name: "Kynsra",    coords: [ 1012,  985 ], iconKey: "kitzra_village", region: "kitzra" },
+
+            // House Ritan
+            { name: "Cygnus",    coords: [  969, 1014 ], iconKey: "ritan_capital", region: "ritan" },
+            { name: "Ciel",      coords: [  915, 1062 ], iconKey: "ritan_city",    region: "ritan" },
+            { name: "Celka",     coords: [  961, 1074 ], iconKey: "ritan_city",    region: "ritan" },
+            { name: "Zima",      coords: [ 1202, 1387 ], iconKey: "ritan_city",    region: "ritan" },
+            { name: "Eatalra",   coords: [ 1019, 1145 ], iconKey: "ritan_village", region: "ritan" },
+            { name: "Calnaraoc", coords: [  988, 1217 ], iconKey: "ritan_village", region: "ritan" },
+            { name: "Tepexca",   coords: [ 1100, 1245 ], iconKey: "ritan_village", region: "ritan" },
+            { name: "Iztapa",    coords: [ 1172, 1296 ], iconKey: "ritan_village", region: "ritan" },
+            
+            // Ancient Dwarves
+            { name: "Ort-Sherandum", coords: [ 1026,  693 ], iconKey: "dwarven_city",    region: "dwarves" },
+            { name: "Ort-Agadum",    coords: [  859,  776 ], iconKey: "dwarven_city",    region: "dwarves" },
+            { name: "Ort-Yarendum",  coords: [ 1025,  855 ], iconKey: "dwarven_city",    region: "dwarves" },
+            { name: "Oranmar",       coords: [ 1240,  631 ], iconKey: "dwarven_village", region: "dwarves" },
+            { name: "Ort-Dendardum", coords: [ 1156,  984 ], iconKey: "dwarven_village", region: "dwarves" },
+            { name: "Kolrak",        coords: [ 1249, 1109 ], iconKey: "dwarven_village", region: "dwarves" },
+            { name: "Zememunt",      coords: [  932, 1245 ], iconKey: "dwarven_village", region: "dwarves" },
+
+            // Amu-Tep
+            { name: "Apis",         coords: [ 1434, 1245 ], iconKey: "amutep_capital", region: "amutep" },
+            { name: "Niwt-Nebetah", coords: [ 1357, 1262 ], iconKey: "amutep_city",    region: "amutep" },
+
+            // Banen'Rhun
+            { name: "Bel'Serra", coords: [ 653, 421 ], iconKey: "banenrhun_capital", region: "banenrhun" },
+            { name: "Bel'Kana",  coords: [ 491, 656 ], iconKey: "banenrhun_city",    region: "banenrhun" },
+
+            // Stargazers
+            { name: "Kulusak", coords: [ 962, 1345 ], iconKey: "stargazers_capital", region: "stargazers" },
+
+            // Others
+            { name: "Azul",           coords: [ 1659, 1090 ], iconKey: "stargazers_village", region: "others" },
+            { name: "Nahas Frontier", coords: [ 1338, 1040 ], iconKey: "stargazers_village", region: "others" }
+        ]
+
+        // Create markers
+        const markersByRegion = {};
+        places.forEach( place => {
+            const marker = L.marker( xy( ...place.coords ), {
+                icon: icons[ place.iconKey ],
+                title: place.name
+            } )
+            .bindTooltip( place.name, { permanent: true, direction: "top" } )
+
+            markersByRegion[ place.region ] = markersByRegion[ place.region ] || [];
+            markersByRegion[ place.region ].push( marker )
+        } );
 
         // Polygons
+        var tzukyn_wilds = L.polygon( [
+            xy( 1105, 1077 ),
+            xy( 1108, 1134 ),
+            xy( 1070, 1110 ),
+            xy( 1064, 1094 ),
+            xy( 1081, 1080 )
+        ], { color: "#007f7f" } );
+
         var great_plains = L.polygon( [
             xy( 478,  765 ),
             xy( 644,  765 ),
@@ -183,14 +208,6 @@
             xy( 542,  992 ),
             xy( 449,  888 )
         ], { color: "#d4af37" } );
-
-        var tzukyn_wilds = L.polygon( [
-            xy( 1105, 1077 ),
-            xy( 1108, 1134 ),
-            xy( 1070, 1110 ),
-            xy( 1064, 1094 ),
-            xy( 1081, 1080 )
-        ], { color: "#007f7f" } );
 
         var arctic = L.polygon ( [
             xy( 495,  42 ),
@@ -214,27 +231,24 @@
         ], { color: "#977f3e" } );
 
         // Toggleable layers
-        var asturias   = L.layerGroup( [ astorga, tepnavaca, forcadas, calaxapa, tepizanoc, ardisa, belazaima, huesca, bairradas, orotava, delmossa, vedra ] );
-        var dumanon    = L.layerGroup( [ new_hartham, fort_balcree, siron, ramouzen, new_keldham, triviaux, vallade, seillans, havresse, port_gratton, kirkpharin ] );
-        var gallia     = L.layerGroup( [ alienor, port_amical, aureilhan ] );
-        var sasanshahr = L.layerGroup( [ surem ] );
-        var daramos    = L.layerGroup( [ annec, snelnor, torenor, acrabera ] )
-        var tzukyn     = L.layerGroup( [ zipactonen, tzukyn_wilds ] )
-        var galasaar   = L.layerGroup( [ yinresse, kynrae, jinresse, halanor, merra, ulthaira, isec, ulthbaxthaira, kelrae, loresse, ynnec ] )
-        var kitzra     = L.layerGroup( [ kynsra, anra, myinshara ] )
-        var ritan      = L.layerGroup( [ cygnus, ciel, celka, eatalra, calranoc, tepexca, iztapa, zima ] )
-        var dwarves    = L.layerGroup( [ oranmar, sherandum, agadum, yarendum, dendardum, kolrak, zememunt ] )
-        var amutep     = L.layerGroup( [ nebetah, apis ] )
-        var banenrhun  = L.layerGroup( [ belserra, belkana ] )
-        var stargazers = L.layerGroup( [ kulusak ] )
-        var others      = L.layerGroup( [ azul, nahas, great_plains, arctic, north_wilds ] )
+        const layerGroups = {};
+        for ( const region in markersByRegion ) {
+            layerGroups[ region ] = L.layerGroup( markersByRegion[ region ] );
+        }
+
+        layerGroups.tzukyn.addLayer( tzukyn_wilds );
+        layerGroups.others.addLayer( great_plains );
+        layerGroups.others.addLayer( arctic );
+        layerGroups.others.addLayer( north_wilds );
 
         // Map initialization
         var map = L.map( "map", {
             crs: L.CRS.Simple,
             minZoom: -1,
             maxZoom: 3,
-            layers: [asturias, dumanon, gallia, sasanshahr, daramos, tzukyn, galasaar, kitzra, ritan, dwarves, amutep, banenrhun, stargazers, others]
+            layers: [layerGroups.asturias, layerGroups.dumanon, layerGroups.gallia, layerGroups.sasanshahr,
+                    layerGroups.daramos, layerGroups.tzukyn, layerGroups.galasaar, layerGroups.kitzra, layerGroups.ritan,
+                    layerGroups.dwarves, layerGroups.amutep, layerGroups.banenrhun, layerGroups.stargazers, layerGroups.others]
         });
 
         // Map layer
@@ -250,28 +264,38 @@
         }
 
         var overlayMaps = {
-            "Asturias": asturias,
-            "Dumanon": dumanon,
-            "Gallia": gallia,
-            "Sasanshahr": sasanshahr,
-            "House Daramos": daramos,
-            "House Tzukyn": tzukyn,
-            "House Galasaar": galasaar,
-            "House Kitzra": kitzra,
-            "House Ritan": ritan,
-            "Ancient Dwarves": dwarves,
-            "Amu-Tep": amutep,
-            "Banen'Rhûn": banenrhun,
-            "Stargazers": stargazers,
-            "Others": others
+            "Asturias": layerGroups.asturias,
+            "Dumanon": layerGroups.dumanon,
+            "Gallia": layerGroups.gallia,
+            "Sasanshahr": layerGroups.sasanshahr,
+            "House Daramos": layerGroups.daramos,
+            "House Tzukyn": layerGroups.tzukyn,
+            "House Galasaar": layerGroups.galasaar,
+            "House Kitzra": layerGroups.kitzra,
+            "House Ritan": layerGroups.ritan,
+            "Ancient Dwarves": layerGroups.dwarves,
+            "Amu-Tep": layerGroups.amutep,
+            "Banen'Rhûn": layerGroups.banenrhun,
+            "Stargazers": layerGroups.stargazers,
+            "Others": layerGroups.others
         }
 
-        // Add to map
+        // Add markers, polygons to map
         var layerControl = L.control.layers( baseMaps, overlayMaps, { collapsed: false, hideSingleBase: true } ).addTo( map );
         great_plains.bindTooltip( "Great Plains", { permanent: true, direction: "center" } ).addTo( map );
         tzukyn_wilds.addTo( map );
         arctic.bindTooltip( "Arctic", { permanent: true, direction: "center" } ).addTo( map );
         north_wilds.bindTooltip( "Northern Wilderness", { permanent: true, direction: "top" } ).addTo( map );
+
+        // PinSearch
+        var searchBar = L.control.pinSearch( {
+            position: 'topright',
+            placeholder: 'Search...',
+            buttonText: 'Search',
+            searchBarWidth: '196px',
+            searchBarHeight: '30px',
+            maxSearchResults: 4
+        }).addTo( map );
 
         // Credits
         L.controlCredits({
