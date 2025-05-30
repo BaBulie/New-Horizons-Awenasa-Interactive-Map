@@ -231,3 +231,72 @@ export const places = [
         info: "Bla"
     }
 ];
+
+export const polygons = [
+    {
+        name: "Tzukyn Wilds",
+        coords: [
+            [ 1105, 1077 ],
+            [ 1108, 1134 ],
+            [ 1070, 1110 ],
+            [ 1064, 1094 ],
+            [ 1081, 1080 ]
+        ],
+        color: "#007f7f",
+        region: "tzukyn",
+        permanent: false,
+        direction: "top",
+        info: "Bla"
+    },
+    {
+        name: "Great Plains",
+        coords: [
+            [ 478,  765 ],
+            [ 644,  765 ],
+            [ 749,  927 ],
+            [ 731, 1020 ],
+            [ 542,  992 ],
+            [ 449,  888 ]
+        ],
+        color: "#d4af37",
+        region: "others",
+        permanent: true,
+        direction: "center",
+        info: "Bla"
+    },
+    {
+        name: "Arctic",
+        coords: [
+            [ 495,  42 ],
+            [ 754,  42 ],
+            [ 773, 215 ],
+            [ 773, 215 ],
+            [ 471, 417 ],
+            [ 242, 467 ],
+            [ 202, 247 ]
+        ],
+        color: "#abc9d6",
+        region: "others",
+        permanent: true,
+        direction: "center",
+        info: "Bla"
+    },
+    {
+        name: "North Wilds",
+        coords: [
+            [  845, 322 ],
+            [ 1285, 347 ],
+            [ 1318, 375 ],
+            [ 1227, 419 ],
+            [  894, 476 ],
+            [  696, 668 ],
+            [  596, 676 ],
+            [  568, 595 ]
+        ],
+        color: "#977f3e",
+        region: "others",
+        permanent: true,
+        direction: "top",
+        info: "Bla"
+    }
+];

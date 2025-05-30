@@ -1,4 +1,4 @@
-import { places } from './places.js';
+import { places, polygons } from './places.js';
 
 // Regions and settlement types
 const regions = [
@@ -67,55 +67,42 @@ export function initMap() {
     } );
 
     // Polygons
-    var tzukyn_wilds = L.polygon( [
-        xy( 1105, 1077 ),
-        xy( 1108, 1134 ),
-        xy( 1070, 1110 ),
-        xy( 1064, 1094 ),
-        xy( 1081, 1080 )
-    ], { color: "#007f7f" } );
+    const areasByRegion = {};
+    polygons.forEach( polygon => {
+        const latlngs = polygon.coords.map( pair => xy( ...pair ) );
 
-    var great_plains = L.polygon( [
-        xy( 478,  765 ),
-        xy( 644,  765 ),
-        xy( 749,  927 ),
-        xy( 731, 1020 ),
-        xy( 542,  992 ),
-        xy( 449,  888 )
-    ], { color: "#d4af37" } );
+        const area = L.polygon( latlngs, {
+            color: polygon.color,
+        } )
+        .bindTooltip( polygon.name, { permanent: polygon.permanent, direction: polygon.direction } )
+        .on( 'click', function ( e ) {
+            L.DomEvent.stopPropagation( e ); // Stop this click event activating the map.on( 'click' ) event further down
+            sidebar.setContent(
+                `<h2>${polygon.name}</h2><p>${polygon.info}</p>`
+            )
+            sidebar.show();
+        } )
 
-    var arctic = L.polygon ( [
-        xy( 495,  42 ),
-        xy( 754,  42 ),
-        xy( 773, 215 ),
-        xy( 773, 215 ),
-        xy( 471, 417 ),
-        xy( 242, 467 ),
-        xy( 202, 247 )
-    ], { color: "#abc9d6" } );
-
-    var north_wilds = L.polygon ( [
-        xy(  845, 322 ),
-        xy( 1285, 347 ),
-        xy( 1318, 375 ),
-        xy( 1227, 419 ),
-        xy(  894, 476 ),
-        xy(  696, 668 ),
-        xy(  596, 676 ),
-        xy(  568, 595 )
-    ], { color: "#977f3e" } );
+        areasByRegion[ polygon.region ] = areasByRegion[ polygon.region ] || [];
+        areasByRegion[ polygon.region ].push( area )
+    } );
 
     // Toggleable layers
     const layerGroups = {};
-    for ( const region in markersByRegion ) {
-        layerGroups[ region ] = L.layerGroup( markersByRegion[ region ] );
-    }
+    const allRegions = new Set( [
+        ...Object.keys(markersByRegion),
+        ...Object.keys(areasByRegion)
+    ] );
 
-    layerGroups.tzukyn.addLayer( tzukyn_wilds );
-    layerGroups.others.addLayer( great_plains );
-    layerGroups.others.addLayer( arctic );
-    layerGroups.others.addLayer( north_wilds );
+    allRegions.forEach( region => {
+        const points = markersByRegion[ region ] || [];
+        const polys = areasByRegion[ region ] || [];
 
+        const layers = [ ...points, ...polys ];
+
+        layerGroups[ region ] = L.layerGroup( layers )
+    } );
+    
     // Map initialization
     var map = L.map( "map", {
         crs: L.CRS.Simple,
@@ -156,11 +143,7 @@ export function initMap() {
     }
 
     // Add markers, polygons to map
-    var layerControl = L.control.layers( baseMaps, overlayMaps, { collapsed: false, hideSingleBase: true } ).addTo( map );
-    great_plains.bindTooltip( "Great Plains", { permanent: true, direction: "center" } ).addTo( map );
-    tzukyn_wilds.addTo( map );
-    arctic.bindTooltip( "Arctic", { permanent: true, direction: "center" } ).addTo( map );
-    north_wilds.bindTooltip( "Northern Wilderness", { permanent: true, direction: "top" } ).addTo( map );
+    L.control.layers( baseMaps, overlayMaps, { collapsed: false, hideSingleBase: true } ).addTo( map );
 
     // Sidebar
     var sidebar = L.control.sidebar( 'sidebar', {
@@ -175,7 +158,7 @@ export function initMap() {
     } );
 
     // PinSearch
-    var searchBar = L.control.pinSearch( {
+    L.control.pinSearch( {
         position: 'topright',
         placeholder: 'Search...',
         buttonText: 'Search',
