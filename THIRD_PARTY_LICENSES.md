@@ -6,3 +6,6 @@ https://raw.githubusercontent.com/GreenInfo-Network/Leaflet-Control-Credits/mast
 
 ### PinSearch (MIT license)
 https://raw.githubusercontent.com/MokahalA/Leaflet.PinSearch//main/LICENSE
+
+### Sidebar
+https://raw.githubusercontent.com/Turbo87/leaflet-sidebar/master/LICENSE
