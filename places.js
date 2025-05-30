@@ -1,7 +1,26 @@
 export const places = [
     // Asturias
     { name: "Astorga",   coords: [ 1610, 1387 ], iconKey: "asturias_capital", region: "asturias",
-        info: "Bla"
+        info: `
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+        Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+        Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        <br><br>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+        Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+        Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        <br><br>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+        Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+        Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        <br><br>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+        Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+        Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+        <br><br>
+        Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis.
+        Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere.
+        `
     },
     { name: "Tepnavaca", coords: [ 1475, 1563 ], iconKey: "asturias_city",    region: "asturias",
         info: "Bla"
@@ -212,7 +231,11 @@ export const places = [
 
     // Banen'Rhun
     { name: "Bel'Serra", coords: [ 653, 421 ], iconKey: "banenrhun_capital", region: "banenrhun",
-        info: "Bla"
+        info: `
+		Deep within the mountains of Rhûn, vast marble halls stretch through living rock, carved from the mountain's very bones. Towering entryways, tall as a ship's mast, usher the Banen'Rhûn into winding tunnels, grand corridors that remain largely empty of life. Geothermal springs buried far beneath the surface warm these ancient chambers, the same waters that feed the Great Lake and prevent its winter freeze. Here the Rhûn have made their home, each generation delving deeper into the mountain's embrace.<br><br>
+		Yet the Banen'Rhûn did not build Bel'Serra, they merely it. This magnificent city bears the mark of the Precursors, its true name and origins lost even to the learned scholars of the Southern Tzuven and Ritanese. <br><br>
+		No outsider has ever entered the mountains of Rhûn by choice. Winter transforms the passes into death traps that challenge even seasoned mountaineers, while summer brings vigilant guards who watch for intruders. Only those unfortunate enough to fall into the hands of Rhûn warbands have glimpsed the forested valley below or beheld the city's terrible grandeur.<br><br>
+		`
     },
     { name: "Bel'Kana",  coords: [ 491, 656 ], iconKey: "banenrhun_city",    region: "banenrhun",
         info: "Bla"
